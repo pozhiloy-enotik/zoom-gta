@@ -1,0 +1,108 @@
+import requests
+import time
+from PIL import Image
+
+
+class Gif:
+    def __init__(self):
+        self.login_url = 'https://zoom.us/signin'
+        self.save_url = 'https://zoom.us/p/save'
+
+        self.csrf_headers = {'FETCH-CSRF-TOKEN': '1'}
+        self.needed = ['_zm_page_auth', '_zm_kms']
+        self.save_payload = {"userId": "",
+                             "file": "",
+                             "x": "0", "y": "0", "w": "438", "h": "438"}
+        self.save_headers = {
+            'Content-Length': '169', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'Cookie': '_zm_page_auth={}; _zm_kms={};',
+            'X-Requested-With': 'XMLHttpRequest, OWASP CSRFGuard Project',
+            'ZOOM-CSRFTOKEN': ''}
+        self.images = []
+        self.delay = 1
+        self.wlog_url = 'https://us04web.zoom.us/wlog'
+        self.upload_url = 'https://zoom.us/p/upload'
+
+    def log_in(self, email, password):
+        self.session = requests.Session()
+        login_payload = {'email': email,
+                         'password': password,
+                         'keep_me_signin': "True",
+                         'type': "100"}
+        login_resp = self.session.post(self.login_url, data=login_payload)
+        html = self.session.get('https://us04web.zoom.us/account/sso').text
+        start = html.find('id="headerPic" src="') + 20
+        id_start = start + 8
+        while html[id_start] != 'p':
+            id_start += 1
+        id_start += 2
+        url_ending = id_start
+        while html[url_ending] != '/':
+            url_ending += 1
+        # print('id')
+        # print(html[id_start:url_ending])
+        # print(id)
+        self.save_payload["userId"] = html[id_start:url_ending]
+
+        while html[url_ending] != '"':
+            url_ending += 1
+        self.save_payload["file"] = html[start:url_ending] + '?type=tmp'
+        self.save_headers['Cookie'] = '; '.join(
+            [x.name + '=' + x.value for x in login_resp.cookies if x.name in self.needed])
+        self.save_headers['ZOOM-CSRFTOKEN'] = self.session.post('https://us04web.zoom.us/csrf_js',
+                                                                headers=self.csrf_headers).text[15:]
+
+    def change_picture(self, x, y, w, h, file_url):
+        self.save_payload['x'] = x
+        self.save_payload['y'] = y
+        self.save_payload['w'] = w
+        self.save_payload['h'] = h
+        self.save_payload['file'] = file_url or self.save_payload['file']
+
+        save_response = self.session.post(self.save_url, data=self.save_payload, headers=self.save_headers)
+        # print(save_response.text)
+        time.sleep(self.delay)
+
+    def upload_picture(self, file):
+        upload_headers = {'Content-Length': '1998866',
+                          # 'Content-Type': 'multipart/form-data; boundary=---------------------------34734475097515124353736042401',
+                          'Cookie': self.save_headers['Cookie'],
+                          'X-Requested-With': 'XMLHttpRequest, OWASP CSRFGuard Project',
+                          'ZOOM-CSRFTOKEN': self.save_headers['ZOOM-CSRFTOKEN']}
+        files = {'file': file}
+        upload_response = self.session.post(self.upload_url, files=files, headers=upload_headers)
+        print(upload_response.text)
+        return upload_response.json()
+
+    def process_image(self, infile):
+        self.images = []
+        if infile[-4] != '.':
+            infile += '.gif'
+        try:
+            im = Image.open(infile)
+        except IOError:
+            print("Cant load", infile)
+            #sys.exit(1)
+            return 1
+        i = 0
+        mypalette = im.getpalette()
+
+        try:
+            while 1:
+                im.putpalette(mypalette)
+                new_im = Image.new("RGBA", im.size)
+                new_im.paste(im)
+                new_im.save('out.png')
+                self.size = new_im.size[0]
+                self.images.append(self.upload_picture(open('out.png', 'rb'))['result'])
+
+                i += 1
+                im.seek(im.tell() + 1)
+
+        except EOFError:
+            pass
+        return 0
+
+
+if __name__ == '__main__':
+    pass
