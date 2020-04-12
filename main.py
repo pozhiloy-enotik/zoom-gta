@@ -42,12 +42,11 @@ set_delay()
 
 while True:
     print('Starting... Press Ctrl+C to stop')
-    size = gif.size
     length = len(gif.images)
     i = 0
     try:
         while True:
-            gif.change_picture(0, 0, size, size, gif.images[i])
+            gif.change_picture(0, 0, f'{gif.w}', f'{gif.h}', gif.images[i])
             i += 1
             if i == length:
                 i = 0

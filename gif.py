@@ -92,9 +92,14 @@ class Gif:
                 im.putpalette(mypalette)
                 new_im = Image.new("RGBA", im.size)
                 new_im.paste(im)
-                new_im.save('out.png')
-                self.size = new_im.size[0]
-                self.images.append(self.upload_picture(open('out.png', 'rb'))['result'])
+
+                self.w, self.h = new_im.size
+                if self.w == self.h and self.h <=400:
+                    new_im = new_im.resize((400, 400), Image.ANTIALIAS)
+                    self.w, self.h = new_im.size
+
+                new_im.save('temp.png')
+                self.images.append(self.upload_picture(open('temp.png', 'rb'))['result'])
 
                 i += 1
                 im.seek(im.tell() + 1)
