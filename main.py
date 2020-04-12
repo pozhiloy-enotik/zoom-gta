@@ -56,7 +56,7 @@ while True:
         a = int(input('1. Start\n'
                       '2. Change account\n'
                       '3. Change gif\n'
-                      '4. Change delay'))
+                      '4. Change delay\n'))
         if a == 1:
             pass
         elif a == 2:
