@@ -22,6 +22,14 @@ git clone https://github.com/pozhiloy-enotik/zoom-gta
 cd zoom gta
 pip3 install -r requirements.txt
 ```
+#####      For Termux also enter:
+```sh
+pkg install python libjpeg-turbo libcrypt ndk-sysroot clang zlib
+LDFLAGS="-L${PREFIX}/lib/" CFLAGS="-I${PREFIX}/include/" pip install --upgrade wheel pillow
+```
+
+
+
 
 <h1 align = "center"> 🚩 Launch </h1>
 
