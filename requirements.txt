@@ -1,2 +1,2 @@
-Pillow
 requests
+Pillow
