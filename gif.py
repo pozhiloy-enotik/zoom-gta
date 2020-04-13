@@ -1,6 +1,7 @@
 import requests
 import time
 from PIL import Image
+import os
 
 
 class Gif:
@@ -68,30 +69,22 @@ class Gif:
         if infile[-4] != '.':
             infile += '.gif'
         try:
-            im = Image.open(infile)
+            frame = Image.open(infile)
         except IOError:
             print("Cant load", infile)
-            # sys.exit(1)
             return 1
         i = 0
-        mypalette = im.getpalette()
 
         try:
-            while 1:
-                im.putpalette(mypalette)
-                new_im = Image.new("RGBA", im.size)
-                new_im.paste(im)
-
-                self.w, self.h = new_im.size
+            while frame:
+                self.w, self.h = frame.size
                 if self.w == self.h and self.h <= 400:
-                    new_im = new_im.resize((400, 400), Image.ANTIALIAS)
-                    self.w, self.h = new_im.size
-
-                new_im.save('temp.png')
-                self.images.append(self.upload_picture(open('temp.png', 'rb'))['result'])
-
+                    frame.resize((400, 400), Image.ANTIALIAS)
+                    self.w, self.h = frame.size
+                frame.save('temp.gif', 'gif')
+                self.images.append(self.upload_picture(open('temp.gif', 'rb'))['result'])
                 i += 1
-                im.seek(im.tell() + 1)
+                frame.seek(i)
 
         except EOFError:
             pass
