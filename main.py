@@ -18,8 +18,12 @@ def log_in():
     email = input('Enter your e-mail:\n')
     password = input('Enter your password:\n')
     print('Processing...')
-    gif.log_in(email, password)
-    upload()
+    result = gif.log_in(email, password)
+    if result:
+        upload()
+    else:
+        print('Wrong email or password')
+        log_in()
 
 
 def upload():

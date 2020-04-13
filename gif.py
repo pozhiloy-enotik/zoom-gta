@@ -30,27 +30,15 @@ class Gif:
                          'keep_me_signin': "True",
                          'type': "100"}
         login_resp = self.session.post(self.login_url, data=login_payload)
-        html = self.session.get('https://us04web.zoom.us/account/sso').text
-        start = html.find('id="headerPic" src="') + 20
-        id_start = start + 8
-        while html[id_start] != 'p':
-            id_start += 1
-        id_start += 2
-        url_ending = id_start
-        while html[url_ending] != '/':
-            url_ending += 1
-        # print('id')
-        # print(html[id_start:url_ending])
-        # print(id)
-        self.save_payload["userId"] = html[id_start:url_ending]
 
-        while html[url_ending] != '"':
-            url_ending += 1
-        self.save_payload["file"] = html[start:url_ending] + '?type=tmp'
-        self.save_headers['Cookie'] = '; '.join(
-            [x.name + '=' + x.value for x in login_resp.cookies if x.name in self.needed])
-        self.save_headers['ZOOM-CSRFTOKEN'] = self.session.post('https://us04web.zoom.us/csrf_js',
-                                                                headers=self.csrf_headers).text[15:]
+        if login_resp.json()['status']:
+            self.save_headers['Cookie'] = '; '.join(
+                [x.name + '=' + x.value for x in login_resp.cookies if x.name in self.needed])
+            self.save_headers['ZOOM-CSRFTOKEN'] = self.session.post('https://us04web.zoom.us/csrf_js',
+                                                                    headers=self.csrf_headers).text[15:]
+            return True
+        else:
+            return False
 
     def change_picture(self, x, y, w, h, file_url):
         self.save_payload['x'] = x
@@ -83,7 +71,7 @@ class Gif:
             im = Image.open(infile)
         except IOError:
             print("Cant load", infile)
-            #sys.exit(1)
+            # sys.exit(1)
             return 1
         i = 0
         mypalette = im.getpalette()
@@ -95,7 +83,7 @@ class Gif:
                 new_im.paste(im)
 
                 self.w, self.h = new_im.size
-                if self.w == self.h and self.h <=400:
+                if self.w == self.h and self.h <= 400:
                     new_im = new_im.resize((400, 400), Image.ANTIALIAS)
                     self.w, self.h = new_im.size
 
@@ -107,6 +95,12 @@ class Gif:
 
         except EOFError:
             pass
+        link = self.images[-1]
+        start = link.find('zoom.us/p/') + 10
+        end = start
+        while link[end] != '/':
+            end += 1
+        self.save_payload["userId"] = link[start:end]
         return 0
 
 
