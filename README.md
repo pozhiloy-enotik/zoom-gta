@@ -25,6 +25,12 @@ cd zoom-gta
 pip3 install -r requirements.txt
 ```
 
+#####      Дополнительно для Termux:
+```sh
+pkg install python libjpeg-turbo libcrypt ndk-sysroot clang zlib
+LDFLAGS="-L${PREFIX}/lib/" CFLAGS="-I${PREFIX}/include/" pip install --upgrade wheel pillow
+```
+
 <h1 align="center">🚩 Запуск</h1>
 
 Введите команду `python3 main.py` или `python main.py`, находясь в директории склонированного репозитория.  <br/>
