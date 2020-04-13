@@ -46,11 +46,14 @@ while True:
     i = 0
     try:
         while True:
-            gif.change_picture(0, 0, f'{gif.w}', f'{gif.h}', gif.images[i])
+            status = gif.change_picture(0, 0, f'{gif.w}', f'{gif.h}', gif.images[i])
             i += 1
             if i == length:
                 i = 0
-            print('Frame:', i)
+            if status['status']:
+                print('Frame:', i)
+            else:
+                print('Frame', i, f'skipped. An error occurred: "{status["errorMessage"]}"')
     except KeyboardInterrupt:
         print('Stopped')
         a = int(input('1. Start\n'

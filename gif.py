@@ -62,6 +62,7 @@ class Gif:
         save_response = self.session.post(self.save_url, data=self.save_payload, headers=self.save_headers)
         # print(save_response.text)
         time.sleep(self.delay)
+        return save_response.json()
 
     def upload_picture(self, file):
         upload_headers = {'Content-Length': '1998866',
