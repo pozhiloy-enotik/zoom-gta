@@ -95,6 +95,6 @@ ____
 ### Проблема с цветами/инвертированные цвета
   - Переходим сюда https://ezgif.com/optimize
   - Загружаем проблемную гифку
-  - В "Optimization method" выбираем "Optimize Transparency" и выкручиваем ползунок на 0
+  - В "Optimization method" выбираем "Optimize Transparency" и выкручиваем ползунок на 0. Так же, можно попробовать "Coalesce"
   - Нажимаем "Optimize gif"
   - Сохраняем
