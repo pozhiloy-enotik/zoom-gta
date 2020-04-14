@@ -1,9 +1,14 @@
 import gif
 import os
+import pickle
 
+ACCOUNTS_FILE = 'accounts.zoomgtadonotopenverysecret'
 gif = gif.Gif()
 
-
+if os.path.exists(ACCOUNTS_FILE) and os.path.getsize(ACCOUNTS_FILE) > 0:
+    accounts = pickle.load(open(ACCOUNTS_FILE, 'rb'))
+else:
+    accounts = []
 # start_gui = input('Start GUI? (y/n)')
 # if start_gui == 'y':
 #     import gui
@@ -14,9 +19,39 @@ print('If you like this program, please, consider donating:\n'
       'https://www.donationalerts.com/r/pozhiloyenotik')
 
 
+def save_account(account):
+    accounts.append(account)
+    with open(ACCOUNTS_FILE, 'wb') as file:
+        pickle.dump(accounts, file)
+
+
+def delete_account(number):
+    accounts.pop(number-1)
+    with open(ACCOUNTS_FILE, 'wb') as file:
+        pickle.dump(accounts, file)
+
+
 def log_in():
-    email = input('Enter your e-mail:\n')
-    password = input('Enter your password:\n')
+    i = 1
+    while i <= len(accounts):
+        print(str(i) + '.', accounts[i - 1])
+        i += 1
+    choice = int(input(str(i) + '. ' + 'Add an account\n' +
+                       str(i + 1) + '. ' + 'Delete an account\n'))
+    if choice == i:
+        email = input('Enter your e-mail:\n')
+        password = input('Enter your password:\n')
+        if int(input('Do you want to save this account?\n'
+                     '1. Yes\n'
+                     '2. No\n')):
+            save_account((email, password))
+
+    elif choice == i + 1:
+        delete_account(int(input('Enter the number of the account\n')))
+        log_in()
+        return
+    else:
+        email, password = accounts[choice - 1]
     print('Processing...')
     result = gif.log_in(email, password)
     if result:
