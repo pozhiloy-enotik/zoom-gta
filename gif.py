@@ -37,6 +37,7 @@ class Gif:
                 [x.name + '=' + x.value for x in login_resp.cookies if x.name in self.needed])
             self.save_headers['ZOOM-CSRFTOKEN'] = self.session.post('https://us04web.zoom.us/csrf_js',
                                                                     headers=self.csrf_headers).text[15:]
+            time.sleep(0,5)
             return True
         else:
             return False
@@ -66,7 +67,7 @@ class Gif:
 
     def process_image(self, infile):
         self.images = []
-        if infile[-4] != '.':
+        if ('0000' + infile)[-4] != '.':
             infile += '.gif'
         try:
             frame = Image.open(infile)
