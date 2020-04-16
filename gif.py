@@ -37,7 +37,7 @@ class Gif:
                 [x.name + '=' + x.value for x in login_resp.cookies if x.name in self.needed])
             self.save_headers['ZOOM-CSRFTOKEN'] = self.session.post('https://us04web.zoom.us/csrf_js',
                                                                     headers=self.csrf_headers).text[15:]
-            time.sleep(0,5)
+            time.sleep(0.5)
             return True
         else:
             return False
