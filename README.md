@@ -30,6 +30,13 @@ pip3 install -r requirements.txt
 pkg install python libjpeg-turbo libcrypt ndk-sysroot clang zlib
 LDFLAGS="-L${PREFIX}/lib/" CFLAGS="-I${PREFIX}/include/" pip install --upgrade wheel pillow
 ```
+###### Как закидывать гифки в Termux:
+1. Создаем на внутренней памяти папку "gifs" и закидываем туда гифки
+2. Прописываем в консоли Termux:
+```sh
+cp /storage/emulated/0/gifs/*.gif /data/data/com.termux/files/home/zoom-gta/
+```
+
 
 <h1 align="center">🚩 Запуск</h1>
 
