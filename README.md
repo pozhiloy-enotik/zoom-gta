@@ -34,7 +34,8 @@ LDFLAGS="-L${PREFIX}/lib/" CFLAGS="-I${PREFIX}/include/" pip install --upgrade w
 1. Создаем на внутренней памяти папку "gifs" и закидываем туда гифки
 2. Прописываем в консоли Termux:
 ```sh
-cp /storage/emulated/0/gifs/*.gif /data/data/com.termux/files/home/zoom-gta/
+cd zoom-gta
+cp /storage/emulated/0/gifs/*.gif ./
 ```
 
 
