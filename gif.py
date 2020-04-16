@@ -80,9 +80,9 @@ class Gif:
             while frame:
                 self.w, self.h = frame.size
                 if self.w == self.h and self.h <= 400:
-                    frame.resize((400, 400), Image.ANTIALIAS)
-                    self.w, self.h = frame.size
-                frame.save('temp.gif', 'gif')
+                    new_im = frame.resize((400, 400), Image.ANTIALIAS)
+                    self.w, self.h = new_im.size
+                new_im.save('temp.gif', 'gif')
                 self.images.append(self.upload_picture(open('temp.gif', 'rb'))['result'])
                 i += 1
                 frame.seek(i)
