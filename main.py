@@ -1,9 +1,20 @@
 import gif
 import os
 import pickle
+import configparser
 
 ACCOUNTS_FILE = 'accounts.zoomgtadonotopenverysecret'
+CONFIG_FILE = 'config.zoomgta.ini'
 gif = gif.Gif()
+cfg = configparser.ConfigParser()
+
+if os.path.exists(CONFIG_FILE) and os.path.getsize(CONFIG_FILE) > 0:
+    cfg.read(CONFIG_FILE)
+    def_gif = cfg['General']['DefaultGifPath']
+    def_delay = cfg['General']['DefaultDelay']
+else:
+    def_gif = None
+    def_delay = 1
 
 if os.path.exists(ACCOUNTS_FILE) and os.path.getsize(ACCOUNTS_FILE) > 0:
     accounts = pickle.load(open(ACCOUNTS_FILE, 'rb'))
@@ -26,9 +37,21 @@ def save_account(account):
 
 
 def delete_account(number):
-    accounts.pop(number-1)
+    accounts.pop(number - 1)
     with open(ACCOUNTS_FILE, 'wb') as file:
         pickle.dump(accounts, file)
+
+
+def save_config(dgif, ddelay):
+    if def_gif:
+        cfg['General']['DefaultGifPath'] = dgif
+        cfg['General']['DefaultDelay'] = ddelay
+    else:
+        cfg.add_section('General')
+        cfg.set('General', 'DefaultGifPath', dgif)
+        cfg.set('General', 'DefaultDelay', ddelay)
+    with open(CONFIG_FILE, 'w') as configfile:
+        cfg.write(configfile)
 
 
 def log_in():
@@ -41,9 +64,9 @@ def log_in():
     if choice == i:
         email = input('Enter your e-mail:\n')
         password = input('Enter your password:\n')
-        if int(input('Do you want to save this account?\n'
-                     '1. Yes\n'
-                     '2. No\n')):
+        if not int(input('Do you want to save this account?\n'
+                         '0. Yes\n'
+                         '1. No\n')):
             save_account((email, password))
 
     elif choice == i + 1:
@@ -55,29 +78,41 @@ def log_in():
     print('Processing...')
     result = gif.log_in(email, password)
     if result:
-        upload()
+        return True
     else:
         print('Wrong email or password')
         log_in()
 
 
 def upload():
-    file = input('Enter the name of a .gif:\n')
-    print('Uploading')
+    if not def_gif:
+        file = input('Enter the name of a .gif:\n')
+    else:
+        file = input('Enter the name of a .gif ( ' + def_gif + ' ) :\n')
+        if not file:
+            file = def_gif
     path = os.path.join(os.path.curdir, file)
-    # print(path)
     result = gif.process_image(path)
     if result:
         print('Not a .gif')
         upload()
+    return file
 
 
 def set_delay():
-    gif.delay = float(input('Enter the delay:\n').replace(',', '.'))
+    if not def_gif:
+        gif.delay = float(input('Enter the delay:\n').replace(',', '.'))
+    else:
+        inp = input('Enter the delay ( ' + str(def_delay) + ' ) :\n')
+        if inp == '':
+            gif.delay = float(def_delay)
+        else:
+            gif.delay = float(inp.replace(',', '.'))
+    return str(gif.delay)
 
 
 log_in()
-set_delay()
+save_config(upload(), set_delay())
 
 while True:
     print('Starting... Press Ctrl+C to stop')
@@ -98,7 +133,8 @@ while True:
         a = int(input('1. Start\n'
                       '2. Change account\n'
                       '3. Change gif\n'
-                      '4. Change delay\n'))
+                      '4. Change delay\n'
+                      '5. Exit\n'))
         if a == 1:
             pass
         elif a == 2:
@@ -107,3 +143,5 @@ while True:
             upload()
         elif a == 4:
             set_delay()
+        elif a == 5:
+            exit()
