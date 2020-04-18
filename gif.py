@@ -124,6 +124,7 @@ class Gif:
         while link[end] != '/':
             end += 1
         self.save_payload["userId"] = link[start:end]
+        print('Frames:', len(self.images))
         return 0
 
 
