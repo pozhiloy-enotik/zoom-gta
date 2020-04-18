@@ -1,7 +1,7 @@
 import requests
 import time
 from PIL import Image
-
+import shutil
 
 class Gif:
     def __init__(self):
@@ -64,7 +64,7 @@ class Gif:
         return upload_response.json()
 
     # Print iterations progress
-    def print_progress_bar(self, iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█',
+    def print_progress_bar(self, iteration, total, prefix='', suffix='', decimals=0, length=100, fill='█',
                            print_end="\r"):
         """
         Call in a loop to create terminal progress bar
@@ -97,6 +97,8 @@ class Gif:
             return 1
         i = 0
         frames = frame.n_frames
+        bar_length, temp = shutil.get_terminal_size()
+        bar_length = bar_length - 23
         try:
             while frame:
                 self.w, self.h = frame.size
@@ -110,12 +112,12 @@ class Gif:
                 if not success:
                     raise Exception(res["errorCode"], res["errorMessage"])
                 self.images.append(res['result'])
-                self.print_progress_bar(i, frames, prefix='Uploading gif... ', suffix='Completed', length=40)
+                self.print_progress_bar(i, frames, prefix='Uploading... ', suffix='', length=bar_length)
                 i += 1
                 frame.seek(i)
         except EOFError:
             pass
-        self.print_progress_bar(i, frames, prefix='Uploading gif... ', suffix='Completed', length=40, print_end='\n')
+        self.print_progress_bar(i, frames, prefix='Uploading... ', suffix='', length=bar_length, print_end='\n')
         link = self.images[-1]
         start = link.find('zoom.us/p/') + 10
         end = start
