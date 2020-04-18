@@ -1,8 +1,6 @@
 import requests
 import time
 from PIL import Image
-import os
-import sys
 
 
 class Gif:
@@ -64,8 +62,10 @@ class Gif:
         files = {'file': file}
         upload_response = self.session.post(self.upload_url, files=files, headers=upload_headers)
         return upload_response.json()
+
     # Print iterations progress
-    def printProgressBar (self, iteration, total, prefix = '', suffix = '', decimals = 1, length = 100, fill = '█', printEnd = "\r"):
+    def print_progress_bar(self, iteration, total, prefix='', suffix='', decimals=1, length=100, fill='█',
+                           print_end="\r"):
         """
         Call in a loop to create terminal progress bar
         @params:
@@ -79,12 +79,13 @@ class Gif:
             printEnd    - Optional  : end character (e.g. "\r", "\r\n") (Str)
         """
         percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
-        filledLength = int(length * iteration // total)
-        bar = fill * filledLength + '-' * (length - filledLength)
-        print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end = printEnd)
+        filled_length = int(length * iteration // total)
+        bar = fill * filled_length + '-' * (length - filled_length)
+        print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end=print_end)
         # Print New Line on Complete
-        if iteration == total: 
+        if iteration == total:
             print()
+
     def process_image(self, infile):
         self.images = []
         if ('0000' + infile)[-4] != '.':
@@ -105,16 +106,16 @@ class Gif:
                     self.w, self.h = new_im.size
                 new_im.save('temp.gif', 'gif')
                 res = self.upload_picture(open('temp.gif', 'rb'))
-                sucess = res["status"]
-                if sucess == False:
+                success = res["status"]
+                if not success:
                     raise Exception(res["errorCode"], res["errorMessage"])
                 self.images.append(res['result'])
-                self.printProgressBar(i, frames, prefix='Uploading gif... ', suffix='Completed', length=40)
+                self.print_progress_bar(i, frames, prefix='Uploading gif... ', suffix='Completed', length=40)
                 i += 1
                 frame.seek(i)
         except EOFError:
             pass
-        self.printProgressBar(i, frames, prefix='Uploading gif... ', suffix='Completed', length=40, printEnd='\n')
+        self.print_progress_bar(i, frames, prefix='Uploading gif... ', suffix='Completed', length=40, print_end='\n')
         link = self.images[-1]
         start = link.find('zoom.us/p/') + 10
         end = start

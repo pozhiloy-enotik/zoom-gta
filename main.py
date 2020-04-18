@@ -12,7 +12,7 @@ if os.path.exists(CONFIG_FILE) and os.path.getsize(CONFIG_FILE) > 0:
     cfg.read(CONFIG_FILE)
     def_gif = cfg['General']['DefaultGifPath']
     def_delay = cfg['General']['DefaultDelay']
-else :
+else:
     def_gif = None
     def_delay = 1
 
@@ -37,13 +37,13 @@ def save_account(account):
 
 
 def delete_account(number):
-    accounts.pop(number-1)
+    accounts.pop(number - 1)
     with open(ACCOUNTS_FILE, 'wb') as file:
         pickle.dump(accounts, file)
 
 
 def save_config(dgif, ddelay):
-    if def_gif != None:
+    if def_gif:
         cfg['General']['DefaultGifPath'] = dgif
         cfg['General']['DefaultDelay'] = ddelay
     else:
@@ -51,7 +51,7 @@ def save_config(dgif, ddelay):
         cfg.set('General', 'DefaultGifPath', dgif)
         cfg.set('General', 'DefaultDelay', ddelay)
     with open(CONFIG_FILE, 'w') as configfile:
-           cfg.write(configfile)
+        cfg.write(configfile)
 
 
 def log_in():
@@ -64,9 +64,9 @@ def log_in():
     if choice == i:
         email = input('Enter your e-mail:\n')
         password = input('Enter your password:\n')
-        if int(input('Do you want to save this account?\n'
-                     '1. Yes\n'
-                     '2. No\n')):
+        if not int(input('Do you want to save this account?\n'
+                         '0. Yes\n'
+                         '1. No\n')):
             save_account((email, password))
 
     elif choice == i + 1:
@@ -85,11 +85,11 @@ def log_in():
 
 
 def upload():
-    if def_gif == None:
+    if not def_gif:
         file = input('Enter the name of a .gif:\n')
     else:
-        file = input('Enter the name of a .gif ( '+def_gif+' ) :\n')
-        if file == '':
+        file = input('Enter the name of a .gif ( ' + def_gif + ' ) :\n')
+        if not file:
             file = def_gif
     path = os.path.join(os.path.curdir, file)
     result = gif.process_image(path)
@@ -100,19 +100,19 @@ def upload():
 
 
 def set_delay():
-    if def_gif == None:
+    if not def_gif:
         gif.delay = float(input('Enter the delay:\n').replace(',', '.'))
     else:
-        inp = input('Enter the delay ( '+str(def_delay)+' ) :\n')
+        inp = input('Enter the delay ( ' + str(def_delay) + ' ) :\n')
         if inp == '':
             gif.delay = float(def_delay)
         else:
             gif.delay = float(inp.replace(',', '.'))
     return str(gif.delay)
 
+
 log_in()
 save_config(upload(), set_delay())
-
 
 while True:
     print('Starting... Press Ctrl+C to stop')
