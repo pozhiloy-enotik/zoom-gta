@@ -79,6 +79,7 @@ class Gif:
         try:
             while frame:
                 self.w, self.h = frame.size
+                new_im = frame
                 if self.w == self.h and self.h <= 400:
                     new_im = frame.resize((400, 400), Image.ANTIALIAS)
                     self.w, self.h = new_im.size
