@@ -57,7 +57,7 @@ def save_config(dgif, ddelay):
 def log_in():
     i = 1
     while i <= len(accounts):
-        print(str(i) + '.', accounts[i - 1])
+        print(str(i) + '.', accounts[i - 1][0])
         i += 1
     choice = int(input(str(i) + '. ' + 'Add an account\n' +
                        str(i + 1) + '. ' + 'Delete an account\n'))
