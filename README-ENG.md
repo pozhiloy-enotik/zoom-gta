@@ -68,7 +68,7 @@ ____
 Since you can’t just put an animated gif on an avatar in Zoom, this program breaks it into frames and puts them on your profile picture in turn
 
 ### Limitations:
-#### Fingerprint must be square, otherwise crop to the left. You can trim here https://ezgif.com/crop
+#### Works best with square gifs. You can trim here https://ezgif.com/crop
 #### In the same place, you can delete unnecessary frames, I advise you to do this
 
 #### The avatar update interval in the zoom client is about 1 second, which means that if the number of frames in your GIF is 50, it will take about a minute to fully play it. The standards of gifs are in the examples / folder
