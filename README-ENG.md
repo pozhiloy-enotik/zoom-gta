@@ -28,7 +28,13 @@ pkg install python libjpeg-turbo libcrypt ndk-sysroot clang zlib
 LDFLAGS="-L${PREFIX}/lib/" CFLAGS="-I${PREFIX}/include/" pip install --upgrade wheel pillow
 ```
 
-
+###### How to upload GIFs in Termux:
+1. Create a folder "gifs" on the internal memory and drop gifs there
+2. We register in the Termux console:
+```sh
+cd zoom-gta
+cp /storage/emulated/0/gifs/*.gif ./
+````
 
 
 <h1 align = "center"> 🚩 Launch </h1>
@@ -83,3 +89,18 @@ Enter the following command at the command prompt:
 ```sh
 git pull
 ```
+
+### Does not work
+   - Update the program
+   - Check that the information used to log in is correct.
+   - Check again.
+   - Drop the log into the telegram channel https://t.me/zoomgta
+
+
+
+### Problem with colors / inverted colors
+   - Go here https://ezgif.com/optimize
+   - Download the problematic gif
+   - In the "Optimization method" select "Optimize Transparency" and twist the slider to 0. Also, you can try "Coalesce"
+   - Click "Optimize gif"
+   - save
