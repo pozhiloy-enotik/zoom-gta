@@ -95,7 +95,7 @@ def upload():
     result = gif.process_image(path)
     if result:
         print('Not a .gif')
-        upload()
+        return upload()
     return file
 
 
