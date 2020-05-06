@@ -2,6 +2,8 @@ import gif
 import os
 import pickle
 import configparser
+import time
+import subprocess
 
 ACCOUNTS_FILE = 'accounts.zoomgtadonotopenverysecret'
 CONFIG_FILE = 'config.zoomgta.ini'
@@ -54,8 +56,34 @@ def save_config(dgif, ddelay):
         cfg.write(configfile)
 
 
+def get_captcha(file):
+    captcha = ''
+    try:
+        if "com.termux" in os.environ.get("PREFIX", ""):  # If device is running Termux (thanks crinny)
+            path = f'/sdcard/{file}'
+            gif.get_captcha(path)
+            subprocess.run(
+                ["am", "start", "--user", "0", "-a", "android.intent.action.VIEW", "-d", f'file://{path}', "-t",
+                 "image/png"],
+                stdout=subprocess.DEVNULL,
+                stderr=subprocess.DEVNULL,
+            )
+            captcha = input('Enter captcha(saved as "captcha.png"):\n')
+    except FileNotFoundError:
+        pass
+    try:
+        if not captcha:
+            gif.get_captcha(file)
+            import gui
+            captcha = gui.start_gui(file)
+    except:
+        captcha = input(f'Enter captcha(saved as "{file}"):\n')
+    return str(captcha)
+
+
 def log_in():
     i = 1
+    gif.make_session()
     while i <= len(accounts):
         print(str(i) + '.', accounts[i - 1][0])
         i += 1
@@ -64,24 +92,32 @@ def log_in():
     if choice == i:
         email = input('Enter your e-mail:\n')
         password = input('Enter your password:\n')
-        if not int(input('Do you want to save this account?\n'
-                         '0. Yes\n'
-                         '1. No\n')):
-            save_account((email, password))
+
+        captcha = get_captcha('captcha.png')
+        #print(captcha)
+        gif.get_temp_cookies()
+        result = gif.get_auth_cookies(email, password, captcha)
+
+        gif.process_cookies()
+
+        if result:
+            save_account((email, password, gif.session.cookies))
+            return True
+        else:
+            exit(0)
+
 
     elif choice == i + 1:
         delete_account(int(input('Enter the number of the account\n')))
         log_in()
         return
     else:
-        email, password = accounts[choice - 1]
+        email, password, auth_cookies = accounts[choice - 1]
+        gif.session.cookies = auth_cookies
+        gif.get_temp_cookies()
+        gif.process_cookies()
     print('Processing...')
-    result = gif.log_in(email, password)
-    if result:
-        return True
-    else:
-        print('Wrong email or password')
-        log_in()
+    time.sleep(1)
 
 
 def upload():
