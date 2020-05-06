@@ -91,8 +91,11 @@ def re_log_in():
     result = gif.get_auth_cookies(email, password, captcha)
     gif.process_cookies()
     delete_account(current_account + 1)
-    save_account((email, password, gif.session.cookies))
-
+    if result:
+        save_account((email, password, gif.session.cookies))
+        return True
+    else:
+        exit(0)
 
 def log_in():
     global current_account
