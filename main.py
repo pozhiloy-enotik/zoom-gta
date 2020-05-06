@@ -9,7 +9,7 @@ ACCOUNTS_FILE = 'accounts.zoomgtadonotopenverysecret'
 CONFIG_FILE = 'config.zoomgta.ini'
 gif = gif.Gif()
 cfg = configparser.ConfigParser()
-
+current_account = 0
 if os.path.exists(CONFIG_FILE) and os.path.getsize(CONFIG_FILE) > 0:
     cfg.read(CONFIG_FILE)
     def_gif = cfg['General']['DefaultGifPath']
@@ -81,7 +81,21 @@ def get_captcha(file):
     return str(captcha)
 
 
+def re_log_in():
+    print(current_account)
+    print('Cookies expired')
+    email, password, auth_cookies = accounts[current_account]
+    captcha = get_captcha('captcha.png')
+    # print(captcha)
+    gif.get_temp_cookies()
+    result = gif.get_auth_cookies(email, password, captcha)
+    gif.process_cookies()
+    delete_account(current_account + 1)
+    save_account((email, password, gif.session.cookies))
+
+
 def log_in():
+    global current_account
     i = 1
     gif.make_session()
     while i <= len(accounts):
@@ -94,7 +108,7 @@ def log_in():
         password = input('Enter your password:\n')
 
         captcha = get_captcha('captcha.png')
-        #print(captcha)
+        # print(captcha)
         gif.get_temp_cookies()
         result = gif.get_auth_cookies(email, password, captcha)
 
@@ -102,6 +116,8 @@ def log_in():
 
         if result:
             save_account((email, password, gif.session.cookies))
+
+            current_account = len(accounts) - 1
             return True
         else:
             exit(0)
@@ -112,6 +128,7 @@ def log_in():
         log_in()
         return
     else:
+        current_account = choice - 1
         email, password, auth_cookies = accounts[choice - 1]
         gif.session.cookies = auth_cookies
         gif.get_temp_cookies()
@@ -129,8 +146,11 @@ def upload():
             file = def_gif
     path = os.path.join(os.path.curdir, file)
     result = gif.process_image(path)
-    if result:
+    if result == 1:
         print('Not a .gif')
+        return upload()
+    elif result == 2:
+        re_log_in()
         return upload()
     return file
 

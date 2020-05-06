@@ -107,6 +107,11 @@ class Gif:
             print()
 
     def process_image(self, infile):
+        """
+        Errors:
+        1 - Not a gif
+        2 - User not login
+        """
         self.images = []
         if ('0000' + infile)[-4] != '.':
             infile += '.gif'
@@ -130,7 +135,10 @@ class Gif:
                 res = self.upload_picture(open('temp.gif', 'rb'))
                 success = res["status"]
                 if not success:
-                    raise Exception(res["errorCode"], res["errorMessage"])
+                    if res["errorCode"] == 201:
+                        return 2
+                    else:
+                        raise Exception(res["errorCode"], res["errorMessage"])
                 self.images.append(res['result'])
                 self.print_progress_bar(i, frames, prefix='Uploading... ', suffix='', length=bar_length)
                 i += 1
