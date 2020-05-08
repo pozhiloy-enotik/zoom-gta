@@ -64,7 +64,7 @@ def get_captcha(file):
             gif.get_captcha(path)
             subprocess.run(
                 ["am", "start", "--user", "0", "-a", "android.intent.action.VIEW", "-d", f'file://{path}', "-t",
-                 "image/png"],
+                 "image/png", "--activity-clear-task"],
                 stdout=subprocess.DEVNULL,
                 stderr=subprocess.DEVNULL,
             )
