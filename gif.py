@@ -81,7 +81,13 @@ class Gif:
     def upload_picture(self, file):
         files = {'file': file}
         upload_response = self.session.post(self.upload_url, files=files, headers=self.upload_headers)
-        return upload_response.json()
+        try:       	
+            return upload_response.json()
+        except:
+            print(upload_response)
+            print(upload_response.content)
+            raise Exception('Something went wrong with the upload:', upload_response)
+
 
     # Print iterations progress
     def print_progress_bar(self, iteration, total, prefix='', suffix='', decimals=0, length=100, fill='█',
