@@ -52,6 +52,13 @@ Enter your password:
 Your password is from zoom. Do not be afraid, do not steal)) <br/>
   <br/>
 ```sh
+Enter captcha(saved as "captcha.png"):
+```
+Enter captcha (Gallery will be opened Termux, on systems with a GUI - a window with an input field)
+#### Captcha is necessary only when adding an account, if your system does not have a GUI, you can copy the file "accounts.zoomgtadonotopenverysecret"   <br/>
+  <br/>
+
+```sh
 Enter the name of a .gif:
 ```
 Enter the name of your gif. It must be placed in the program directory. <br/>
@@ -92,6 +99,7 @@ git pull
 
 ### Does not work
    - Update the program
+   - Delete "accounts.zoomgtadonotopenverysecret"
    - Check that the information used to log in is correct.
    - Check again.
    - Drop the log into the telegram channel https://t.me/zoomgta
