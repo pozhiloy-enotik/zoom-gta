@@ -81,12 +81,15 @@ class Gif:
     def upload_picture(self, file):
         files = {'file': file}
         upload_response = self.session.post(self.upload_url, files=files, headers=self.upload_headers)
-        try:       	
+        try:
             return upload_response.json()
         except:
-            print(upload_response)
-            print(upload_response.content)
-            raise Exception('Something went wrong with the upload:', upload_response)
+            if upload_response.status_code == 403:
+                return {"status": False, "errorCode": 201}
+            else:
+                print(upload_response)
+                print(upload_response.content)
+                raise Exception('Something went wrong with the upload:', upload_response)
 
 
     # Print iterations progress
@@ -107,7 +110,7 @@ class Gif:
         percent = ("{0:." + str(decimals) + "f}").format(100 * (iteration / float(total)))
         filled_length = int(length * iteration // total)
         bar = fill * filled_length + '-' * (length - filled_length)
-        print('\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end=print_end)
+        print(u'\r%s |%s| %s%% %s' % (prefix, bar, percent, suffix), end=print_end)
         # Print New Line on Complete
         if iteration == total:
             print()
