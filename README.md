@@ -113,6 +113,9 @@ ____
   ```
   - Скиньте лог в телеграм канал https://t.me/zoomgta
   
+### UnicodeEncodeError: 'charmap' codec can't encode characters in position 16-19
+  - Используйте обычную командную строку, а не Git Bash
+ 
 ### Проблема с цветами/инвертированные цвета
   - Переходим сюда https://ezgif.com/optimize
   - Загружаем проблемную гифку
