@@ -82,7 +82,7 @@ def get_captcha(file):
 
 
 def re_log_in():
-    print(current_account)
+    gif.make_session()
     print('Cookies expired')
     email, password, auth_cookies = accounts[current_account]
     captcha = get_captcha('captcha.png')
@@ -186,7 +186,11 @@ while True:
             if status['status']:
                 print('Frame:', i)
             else:
-                print('Frame', i, f'skipped. An error occurred: "{status["errorMessage"]}"')
+                if status["errorMessage"] == 503 or status["errorMessage"] == 403 or status["errorMessage"] == 502:
+                    print('Too many requests. Waiting for 10 seconds')
+                    time.sleep(10)
+                else:
+                    print('Frame', i, f'skipped. An error occurred: "{status["errorMessage"]}"')
     except KeyboardInterrupt:
         print('Stopped')
         a = int(input('1. Start\n'

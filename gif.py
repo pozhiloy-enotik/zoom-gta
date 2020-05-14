@@ -75,8 +75,10 @@ class Gif:
         save_response = self.session.post(self.save_url, data=self.save_payload, headers=self.save_headers)
         # print(save_response.text)
         time.sleep(self.delay)
-
-        return save_response.json()
+        try:
+            return save_response.json()
+        except:
+            return {'status': False, "errorMessage": save_response.status_code}
 
     def upload_picture(self, file):
         files = {'file': file}
