@@ -21,6 +21,8 @@ class Gif:
         self.wlog_url = 'https://us04web.zoom.us/wlog'
         self.upload_url = 'https://zoom.us/p/upload'
         self.auth_cookies = ''
+        self.last_gif = ''
+        self.last_frame = ''
 
     def make_session(self):
         self.session = requests.Session()
@@ -123,7 +125,7 @@ class Gif:
         1 - Not a gif
         2 - User not login
         """
-        self.images = []
+
         if ('0000' + infile)[-4] != '.':
             infile += '.gif'
         try:
@@ -135,8 +137,14 @@ class Gif:
         frames = frame.n_frames
         bar_length, temp = shutil.get_terminal_size()
         bar_length = bar_length - 23
+        if self.last_gif == infile:
+            i = self.last_frame
+        else:
+            self.images = []
+            self.last_gif = infile
         try:
             while frame:
+                self.last_frame = i
                 self.w, self.h = frame.size
                 new_im = frame
                 if self.w == self.h and self.h <= 400:

@@ -83,7 +83,7 @@ def get_captcha(file):
 
 def re_log_in():
     gif.make_session()
-    print('Cookies expired')
+    print('\nCookies expired')
     email, password, auth_cookies = accounts[current_account]
     captcha = get_captcha('captcha.png')
     # print(captcha)
@@ -179,12 +179,14 @@ while True:
     i = 0
     try:
         while True:
-            status = gif.change_picture(0, 0, f'{gif.w}', f'{gif.h}', gif.images[i])
-            i += 1
+
             if i == length:
                 i = 0
+            status = gif.change_picture(0, 0, f'{gif.w}', f'{gif.h}', gif.images[i])
+
             if status['status']:
-                print('Frame:', i)
+                print('Frame:', i+1)
+                i += 1
             else:
                 if status["errorMessage"] == 503 or status["errorMessage"] == 403 or status["errorMessage"] == 502:
                     print('Too many requests. Waiting for 10 seconds')
