@@ -122,3 +122,16 @@ ____
   - В "Optimization method" выбираем "Optimize Transparency" и выкручиваем ползунок на 0. Так же, можно попробовать "Coalesce"
   - Нажимаем "Optimize gif"
   - Сохраняем
+
+
+
+### Вопрос
+![aaaaa](https://image.prntscr.com/image/q40HosUtSpyI3eWD9XFyYw.png)
+### Ответ
+![aaaaa2](https://image.prntscr.com/image/y2HfJp-BTye8Qad_O3Egsg.png)
+
+### Вопрос
+![aaaaa3](https://image.prntscr.com/image/-W5epeQPR-SH8JUpLtZObQ.png)
+### Ответ
+![aaaaa4](https://image.prntscr.com/image/xFyt9NxCSlezW0tPuWiEwA.png)
+
