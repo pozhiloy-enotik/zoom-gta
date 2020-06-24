@@ -102,9 +102,15 @@ git pull
    - Delete "accounts.zoomgtadonotopenverysecret"
    - Check that the information used to log in is correct.
    - Check again.
+   - If you want to use the gif from examples, then you need to not just write the name of the gif, but the full path to it
+  ```sh
+  Enter the name of a .gif:
+  examples/loli
+  ```
    - Drop the log into the telegram channel https://t.me/zoomgta
 
-
+### UnicodeEncodeError: 'charmap' codec can't encode characters in position 16-19
+   - Use CMD, not Git Bash
 
 ### Problem with colors / inverted colors
    - Go here https://ezgif.com/optimize
