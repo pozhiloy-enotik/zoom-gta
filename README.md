@@ -111,7 +111,7 @@ ____
   Enter the name of a .gif:
   examples/loli
   ```
-  - Скиньте лог в телеграм канал https://t.me/zoomgta
+
   
 ### UnicodeEncodeError: 'charmap' codec can't encode characters in position 16-19
   - Используйте обычную командную строку, а не Git Bash
@@ -135,3 +135,5 @@ ____
 ### Ответ
 ![aaaaa4](https://image.prntscr.com/image/xFyt9NxCSlezW0tPuWiEwA.png)
 
+### Если не помогло
+  - Скиньте лог в телеграм канал https://t.me/zoomgta
