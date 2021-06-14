@@ -71,7 +71,6 @@ class Gif:
                          'captchaName': 'captcha-text'
                          }
         login_resp = self.session.post(self.login_url, data=login_payload, headers=self.login_headers)
-        print(login_resp.status_code)
         if login_resp.json()['status']:
             self.auth_cookies = '; '.join(
                 [x.name + '=' + x.value for x in self.session.cookies if x.name in self.needed_auth])
