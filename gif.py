@@ -17,7 +17,7 @@ class Gif:
                              "file": "",
                              "x": "0", "y": "0", "w": "438", "h": "438"}
         self.login_headers = {
-            'User-Agent': 'Github/pozhiloy-enotik (ABOBA; ABOBA; ABOBA; rv:pozhiloy-enotik) ABOBA/228_1337 Github/pozhiloy-enotik',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:86.0) Gecko/20100101 Firefox/86.0',
             'Accept': 'application/json, text/javascript, */*; q=0.01', 'Accept-Language': 'en-US,en;q=0.5',
             'Accept-Encoding': 'gzip, deflate, br',
             'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -71,6 +71,7 @@ class Gif:
                          'captchaName': 'captcha-text'
                          }
         login_resp = self.session.post(self.login_url, data=login_payload, headers=self.login_headers)
+        print(login_resp.status_code)
         if login_resp.json()['status']:
             self.auth_cookies = '; '.join(
                 [x.name + '=' + x.value for x in self.session.cookies if x.name in self.needed_auth])
