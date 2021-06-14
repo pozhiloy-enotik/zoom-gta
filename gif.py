@@ -16,6 +16,22 @@ class Gif:
         self.save_payload = {"userId": "",
                              "file": "",
                              "x": "0", "y": "0", "w": "438", "h": "438"}
+        self.login_headers = {
+            'User-Agent': 'Github/pozhiloy-enotik (ABOBA; ABOBA; ABOBA; rv:pozhiloy-enotik) ABOBA/228_1337 Github/pozhiloy-enotik',
+            'Accept': 'application/json, text/javascript, */*; q=0.01', 'Accept-Language': 'en-US,en;q=0.5',
+            'Accept-Encoding': 'gzip, deflate, br',
+            'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
+            'X-Requested-With': 'XMLHttpRequest, OWASP CSRFGuard Project',
+            #wtf is that
+            'uQHR71Sqnk-a': 'fR4EEUJum7v4-_eijAf8sYWPaQ9BNO6wJ1ouLZfW-RGUrkz_lMdoN5LCTrzNkhguIWb8z9CDCcGPvq4BCM5a9cQrvqu0Nw8BfuKXa53hzIRq3JFBseA-=dgLukaM73osNAo87Wl_2DcZx9hF_d-vlCnyDbLR5SlJ6o49DTh=6Lz_gFmW3XL1SiEciSOESC9H94KlOCcZ3xS2nHPXL1wnn-0FnFR3s=7HrPElkUh5mU2vOU_LHCGU7cp1uW6_WizZGFmWYcR_=98I-aM5m8MLoypdJrQym7jndIdoSUWlqZ-bZpM_pKXp5hlz11pgrrkoWzJPCGuNviwCmx7l11OA3sXcquVZ9aDbWvwf6jfwD_s80V9oJW1LaywaN-b50BQEkXrAx9N943OTVhCmynjee=-l3eSdnao1U0CJTKDwgGWJdvLh5vabRJ5mnpRsm3xIEVVqZLT75ygsUR5dOEsOFIHNbyCeBobrDyvwZhgxOhmuKPm0FGq1F7frcL8rsf8JuQpuVZ35bsF6j=DuJenym3Z1KQ0dn-7fDEx-m=QDAM9uQiRag3WWHCP3FNhIR=cDCL0uXhmKeGDorQ0S3kksW5SJjOH2msEYPTqcSxijfHyifR7o7Fln9PK5bsoO6yT=K_LdA=-akHBKNkVCxQoVguoAyfIoNqgUuzE4sNXTiWVKQU-gJq0xJi92HoUYsj4Ti=FZagHI-Q16S5_WhHsqmxThXDbSnM0czjph6R84Sr22MU4YccYnPZ0qoGYxkTBMS5ySfU2EZPW-x_f0xun3H_7OvChL8_n0Y5cShrg9TBZYKi9jJDTMNBwAIAJpYIscNOy0Kso-K4-fCr9Pex1vRyfoPXwo5AaoYoSIXBczD1rdwGO0paeMRoQue57SkVRWDNRSr115w4v9cInqpGsPGeNa6ohCjnMr6V53KO0kEQjo3VzXqVYKd1fUxgAIijLuRR1_HRQW4Qgkyn8yv2pmeTi2rcqKb9ecH91N6l1di1Uw_Yh1YO4QeYF_BaQw_IrS4in1emkadKBeJcAqM00zh31lKIm47VPhBenu8pQGAw3W883J-2MeuWNnFF9uubEBeavmjhCiS2_s8NygoT4ozcLvXNF73miwfG8C75xeiLjKSFZFMXhrN_zUAnRWU=322BNrflrCfpnZl1VNP2LDXaaK3UjhTTVM=w-u-j=Ao2wlfS9nv3JgKOw=qhih00bkXzXA4lyBx6_UT_Q4gbg2ThTAnmFK=m4MPEuLCgZ0GkRk9KymV-IOyJlUYU9W9kpD8UayrJPkCZ9IqcSEopG092ZW6pkjPe3CMY9X2_KkY=2UU17QJ=eV37cpUIfQOMlsN8Un0jEqoX4PFQz57W7EE3BPgxBkY592MxEOHuDq8jElfsxhRh6OoQ6voDZfgTgC2wkgsMdPik7MNgMmCEsOkOpNvsLXQ0T4b58n004Krvu-Lax=8QIXVVGX2paCfCeL5v=QdWcb9xxp_SbVPB2fMWg38bEm7F=iGh7ZmDdKkl0lS-0ONbd5aNAexk7mijeWLiIF6MR5IRYvJj8GYIeOhlpi=h5X4IqdG0k2WjN5F8MSgR9zLLYcJWAgzSxIBZSgm-Z5pSD0=9j2rmb-p2ydAkEb_Yk6flffrzEWn4wlRuBZXOA_4QpGwBQwygl-kwRHiB3WOBOYuzz8ZuWR-3xeNyYAg5NyaaTch-qW-UPuYn6aTIP_exqnTRFIVTr6uXhSdfXISAd-OUCu86PO8JOgJNSeYc_rxk7jUyCOq2xLrsy97kIUP4sVpbFdxxpuSN5cHy1c41ne=1RwiOapkeZCjWKlDYfgNwnhiH1ddkwd1EKCvlyHIyL7SR5N8sLP2-1CD6A4gJwbEZzHIUHPYjUrzVA6CAqfJr7oVjR0aa9w=AvGwhPd=vpJ3VqEb4v00_oQkeiJ1MayXkBI9h2oJJdumywuNeT-InZWeysxy-rIzDRW444KNUfgSpLsC=QODLg1OKVkzYXaCdprja_G8JEmaZ3pJYQHd-WX4crdkz8lEL=rOEMezaMF1NrVzm9gZNxhWBaW1_ph_qlbGWsrhRnwWFfIIbzRiZJRuPn-l5uELpdQvd9HVE9Su8ngX5VY1Il2JL525jaBrm3UJKj3QA=4RpyAhXThWnlX5rve_5QaM7-hcAfx4ZcwClPjMJJWQ7apcmqeaPbeXE1kI2NN5YPwVOF8i42=5RrHNxEOQHfeYqdBTyNrKdz1pkWIAa1=ZO1qkBMx79KsjCb7GV4E8wmiwCT3kGeeTv=Y6HmvTgZa2ELKsav8Yr=16s1C5Efryy98-yTm-WWGjZxoqGyIpeNFri1nW8SucwU5YO7EHs9F-jJXWF0=fkfpXMaDrOHohCipopRxdM0WpW_Y73CohW3XFkYCZmW43ERoEvz=g=OCxdyOYiOjrZzP21yfGD3=jjg0P-7zH25NumfxBvm8W1x_jNvbRzibg7cpzkK=xpdyki6UsqDv6I8IHUHczYTI-RQkoAmwdMr4LQb36xeVswFO2B4N5DSxGTTom=IkwXhw3Hm1h4s0m51EdiynScBQgN5GVjSLZ7YfgbwC3qShjb3Crnc=F7aeg6mscyoSKQUZYBIhsccz10cZiIDmPm8ec9qKxAki46skfJPvnOSjCkQNJ8XuRgrJhXr9=wV_jJ0i6Wkm1_GRnQjTinEdpiAb_WSne_1IwJxf5UnYM6p8VMWETqTcX2h3i_0D_58_knjQV=jOQegqA36IhwqEk4gUKrP=XZcQBKmYZBCrr5_5vGdli2YPqyDXj0422uXLOqVjPiCrYLUxRNv6dlikGrnSfH1YZpGlM5BvX1DIuj2Un4O0mh6gD4voZ8qWdOI1oUMq22_l=r3gsH0QieSEYhLdd3UyPsZlISKb9plL88DZP=xoAwum2bQggUV=N8B48ga_Qn2qLHasohSj_R3-R5nix9SgcD1sJAOGA2ukyAxV4FG5QDq_0=GHKTYaW14m=CzonOGlCKy9JQrlLrAR_OSExPIB79d0bLjPq-MMWu8Fch3vVJEDEjD=srjL-axwPJrupCZS-lMSRxen6Op882exGiRNnjzNkpVKbyOcpGfW8SCIv-cVH-8CUaxw1cCI-kuXkFDMhd4BaOTVXpR-8SvkeU9L0oAiDd4--KyVymj3prO4JuG-MNwoN6KYXNWGFSdInUfp2g',
+            'uQHR71Sqnk-b': 'nng7i0', 'uQHR71Sqnk-c': 'AMAWSQp6AQAAOrzhBlX2FA5naSfO2uvy2J_RWcOvDHwXY8B4vUf9am_hhRel',
+            'uQHR71Sqnk-d': 'AA6ihIjBDKGNgUGASZAQhISy1WJH_Wpv4YUXpQAAAAAbvp8wAFNATWlFGONAg7xD0MJTKks',
+            'uQHR71Sqnk-f': 'A2WvTAp6AQAAqd2JhCp81eGtv4M-gTyVaKQX5vCoxBuZ91Gh9gQk2yIMCSU8AbLMgJOcuAA7wH8AAEB3AAAAAA==',
+            'uQHR71Sqnk-z': 'q',
+            # ?
+            'Content-Length': '597',
+            'DNT': '1',
+            'TE': 'Trailers'}
         self.images = []
         self.delay = 1
         self.wlog_url = 'https://us04web.zoom.us/wlog'
@@ -31,15 +47,14 @@ class Gif:
         cookie = '; '.join(
             [x.name + '=' + x.value for x in self.session.cookies])
         self.upload_headers = {'Content-Length': '1998866',
-                               # 'Content-Type': 'multipart/form-data; boundary=---------------------------34734475097515124353736042401',
                                'Cookie': cookie,
                                'X-Requested-With': 'XMLHttpRequest, OWASP CSRFGuard Project',
-                               'ZOOM-CSRFTOKEN': self.token}
+                               }
         self.save_headers = {
             'Content-Length': '169', 'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
             'Cookie': cookie,
             'X-Requested-With': 'XMLHttpRequest, OWASP CSRFGuard Project',
-            'ZOOM-CSRFTOKEN': self.token}
+        }
 
     def get_captcha(self, filename):
         captcha_response = self.session.get(self.captcha_url)
@@ -52,8 +67,10 @@ class Gif:
                          'password': password,
                          'keep_me_signin': "True",
                          'type': "100",
-                         'captcha': captcha}
-        login_resp = self.session.post(self.login_url, data=login_payload)
+                         'captcha': captcha,
+                         'captchaName': 'captcha-text'
+                         }
+        login_resp = self.session.post(self.login_url, data=login_payload, headers=self.login_headers)
         if login_resp.json()['status']:
             self.auth_cookies = '; '.join(
                 [x.name + '=' + x.value for x in self.session.cookies if x.name in self.needed_auth])
@@ -75,7 +92,6 @@ class Gif:
         self.save_payload['file'] = file_url or self.save_payload['file']
 
         save_response = self.session.post(self.save_url, data=self.save_payload, headers=self.save_headers)
-        # print(save_response.text)
         time.sleep(self.delay)
         try:
             return save_response.json()
@@ -94,7 +110,6 @@ class Gif:
                 print(upload_response)
                 print(upload_response.content)
                 raise Exception('Something went wrong with the upload:', upload_response)
-
 
     # Print iterations progress
     def print_progress_bar(self, iteration, total, prefix='', suffix='', decimals=0, length=100, fill='█',
