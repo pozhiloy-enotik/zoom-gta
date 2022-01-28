@@ -56,6 +56,7 @@ def save_config(dgif, ddelay):
 
 def get_captcha(file):
     captcha = ''
+    print('Processing...')
     gif.process_phantomjs()
     try:
         if "com.termux" in os.environ.get("PREFIX", ""):  # If device is running Termux (thanks crinny)
@@ -135,8 +136,6 @@ def log_in():
         gif.session.cookies = auth_cookies
         gif.get_temp_cookies()
         gif.process_cookies()
-    print('Processing...')
-    time.sleep(1)
 
 
 def upload():

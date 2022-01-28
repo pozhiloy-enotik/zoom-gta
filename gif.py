@@ -73,7 +73,6 @@ class Gif:
     def process_phantomjs(self):
         phantomjs_response = requests.post(self.phantomjs_url, data=json.dumps(self.phantomjs_data)).json()
         self.login_headers = phantomjs_response['storage']['request']['headers']
-        print(self.login_headers)
         self.login_headers['Cookie'] = '; '.join(
             [x['name'] + '=' + x['value'] for x in phantomjs_response['storage']['cookies']])
 
