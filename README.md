@@ -1,3 +1,5 @@
+<h2 align="center">Статус: Работает✅</h2>
+
 [English(Google-translate)](README-ENG.md)
 
 # zoom - gif to avatar
