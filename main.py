@@ -27,9 +27,7 @@ else:
 #     import gui
 #     exit(0)
 # TODO: GUI
-print('If you like this program, please, consider donating:\n'
-      'https://donatepay.ru/don/pozhiloyenotik\n'
-      'https://www.donationalerts.com/r/pozhiloyenotik')
+print('https://github.com/pozhiloy-enotik/zoom-gta')
 
 
 def save_account(account):
@@ -58,6 +56,7 @@ def save_config(dgif, ddelay):
 
 def get_captcha(file):
     captcha = ''
+    gif.process_phantomjs()
     try:
         if "com.termux" in os.environ.get("PREFIX", ""):  # If device is running Termux (thanks crinny)
             path = f'/sdcard/{file}'
@@ -90,8 +89,8 @@ def re_log_in():
     gif.get_temp_cookies()
     result = gif.get_auth_cookies(email, password, captcha)
     gif.process_cookies()
-    delete_account(current_account + 1)
     if result:
+        delete_account(current_account + 1)
         save_account((email, password, gif.session.cookies))
         return True
     else:
