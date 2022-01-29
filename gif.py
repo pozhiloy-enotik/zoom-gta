@@ -27,7 +27,7 @@ class Gif:
         self.auth_cookies = ''
         self.last_gif = ''
         self.last_frame = ''
-        self.phantomjs_url = 'http://PhantomJScloud.com/api/browser/v2/a-demo-key-with-low-quota-per-ip-address/'
+        self.phantomjs_url = 'http://PhantomJScloud.com/api/browser/v2/{}/'
         self.phantomjs_data = {
             "url": "https://zoom.us/signin",
             'outputAsJson': 'true',
@@ -70,9 +70,21 @@ class Gif:
         with open(filename, 'wb') as f:
             f.write(captcha_response.content)
 
-    def process_phantomjs(self):
-        phantomjs_response = requests.post(self.phantomjs_url, data=json.dumps(self.phantomjs_data)).json()
-        self.login_headers = phantomjs_response['storage']['request']['headers']
+    def process_phantomjs(self, api_key=''):
+        if api_key:
+            url = self.phantomjs_url.format(api_key)
+        else:
+            url = self.phantomjs_url.format("a-demo-key-with-low-quota-per-ip-address")
+        phantomjs_response = requests.post(url, data=json.dumps(self.phantomjs_data)).json()
+        try:
+            self.login_headers = phantomjs_response['storage']['request']['headers']
+        except:
+            if 'OUT OF CREDITS' in phantomjs_response['message']:
+                print('Phantomjs demo out of credits. Read FAQ')
+                return 2
+            else:
+                print(phantomjs_response)
+                exit(0)
         self.login_headers['Cookie'] = '; '.join(
             [x['name'] + '=' + x['value'] for x in phantomjs_response['storage']['cookies']])
 

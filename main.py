@@ -12,11 +12,23 @@ cfg = configparser.ConfigParser()
 current_account = 0
 if os.path.exists(CONFIG_FILE) and os.path.getsize(CONFIG_FILE) > 0:
     cfg.read(CONFIG_FILE)
-    def_gif = cfg['General']['DefaultGifPath']
-    def_delay = cfg['General']['DefaultDelay']
+    try:
+        def_gif = cfg['General']['DefaultGifPath']
+    except:
+        def_gif = None
+    try:
+        def_delay = cfg['General']['DefaultDelay']
+    except:
+        def_delay = 1
+    try:
+        api_key = cfg['General']['api-key']
+    except:
+        api_key = ''
 else:
     def_gif = None
     def_delay = 1
+    api_key = ''
+
 
 if os.path.exists(ACCOUNTS_FILE) and os.path.getsize(ACCOUNTS_FILE) > 0:
     accounts = pickle.load(open(ACCOUNTS_FILE, 'rb'))
@@ -47,17 +59,37 @@ def save_config(dgif, ddelay):
         cfg['General']['DefaultGifPath'] = dgif
         cfg['General']['DefaultDelay'] = ddelay
     else:
-        cfg.add_section('General')
+        try:
+            cfg.add_section('General')
+        except:
+            pass
         cfg.set('General', 'DefaultGifPath', dgif)
         cfg.set('General', 'DefaultDelay', ddelay)
     with open(CONFIG_FILE, 'w') as configfile:
         cfg.write(configfile)
 
+def save_api(api):
+    if api_key:
+        cfg['General']['api-key'] = api
+    else:
+        try:
+            cfg.add_section('General')
+        except:
+            pass
+        cfg.set('General', 'api-key', api)
+    with open(CONFIG_FILE, 'w') as configfile:
+        cfg.write(configfile)
 
 def get_captcha(file):
     captcha = ''
     print('Processing...')
-    gif.process_phantomjs()
+    result = gif.process_phantomjs(api_key)
+    if result == 2:
+        print('Enter your phantomjscloud api-key \n'
+              'Введи ключ(Читай faq):')
+        key = input().strip()
+        gif.process_phantomjs(key)
+        save_api(key)
     try:
         if "com.termux" in os.environ.get("PREFIX", ""):  # If device is running Termux (thanks crinny)
             path = f'/sdcard/{file}'
