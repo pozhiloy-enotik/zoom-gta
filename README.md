@@ -113,7 +113,9 @@ ____
   Enter the name of a .gif:
   examples/loli
   ```
-
+### Phantomjs demo out of credits
+  - Зарегайся на https://phantomjscloud.com/
+  - Введи api-key в прогу
   
 ### UnicodeEncodeError: 'charmap' codec can't encode characters in position 16-19
   - Используйте обычную командную строку, а не Git Bash
