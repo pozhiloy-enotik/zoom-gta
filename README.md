@@ -103,6 +103,12 @@ git pull
 ____
 <h1 align="center">FAQ</h1>
 
+### Бесконечная капча
+  - Для начала войдите в аккаунт с браузера и введите код с почты чтобы зум запомнил ваш ip
+###
+
+![Screenshot_464](https://user-images.githubusercontent.com/49619526/158879597-b0c4b72e-9f27-49f7-940d-4b70a0c2ab8d.png)
+
 ### Не работает
   - Обновите программу
   - Удалите "accounts.zoomgtadonotopenverysecret"
