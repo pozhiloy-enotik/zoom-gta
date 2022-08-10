@@ -1,5 +1,6 @@
-<h2 align="center">Статус: Работает✅</h2>
+<h2 align="center">Статус: Работает✅
 
+10.08.2022</h2>
 [English(Google-translate)](README-ENG.md)
 
 # zoom - gif to avatar
