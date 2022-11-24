@@ -41,8 +41,8 @@ class Gif:
             await page.waitForSelector("input#password"); 
             await page.evaluate(".signinNeedCaptcha=false");
             await page.type("input#password",_pass); 
-            page.click("button.signin"); 
-            page.meta.store.set("request", await page.waitForRequest("https://zoom.us/signin"));
+            page.click("button#js_btn_login"); 
+            page.meta.store.set("request", await page.waitForRequest("https://zoom.us/signin/route"));
             let cookies = await page.cookies();
             page.meta.store.set("cookies", cookies);"""}
 
